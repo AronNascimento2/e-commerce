@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import { formatPrice } from '../../utils/formatPrice'
 import { ProductModel } from '../../../domain/models/productsModel'
 import * as S from './styles'
-import {
-  ButtonGroup,
-  TotalPrice,
-  Wrapper
-} from '../../components/Header/styles'
-import { BoxItems } from '../../components/BoxItems/styles'
+import { TotalPrice } from '../../components/Header/styles'
+import { CartItem } from '../../components/CartItem'
+import { handleAddFromCart } from '../../utils/handleAddFromCart'
+import { Button } from '../../components/Button'
+import { ButtonGroup } from '../../components/ButtonGroup'
 
 type CheckoutPageProps = {
   cartItems: ProductModel[]
@@ -20,71 +19,93 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
   setShowPage,
   setCartItems
 }) => {
+  const [paymentSuccess, setPaymentSuccess] = useState(false)
+  const [isCartEmpty, setIsCartEmpty] = useState(cartItems.length === 0)
+  const [isLoading, setIsLoading] = useState(false)
+
   const totalAmount = cartItems.reduce(
     (total, item) => total + item.preco * (item.count ?? 1),
     0
   )
-
-  const [paymentSuccess, setPaymentSuccess] = useState(false)
-  const [isCartEmpty, setIsCartEmpty] = useState(cartItems.length === 0)
 
   const handlePayment = () => {
     // Verifica se há itens no carrinho antes de permitir o pagamento
     if (cartItems.length === 0) {
       return
     }
-
+    // Inicia o estado de carregamento
+    setIsLoading(true)
     // Simula um processo de pagamento e exibe a mensagem de sucesso após 2 segundos
     setTimeout(() => {
       setPaymentSuccess(true)
-
-      // Após 2 segundos, esconde a página
+      // Após 2 segundos, esconde a mensagem de sucesso e faz outras atualizações
       setTimeout(() => {
         setPaymentSuccess(false)
         setCartItems([]) // Atualiza o carrinho para ficar vazio
-        setShowPage(true)
+        setShowPage(true) // Volta para HomePage
         setIsCartEmpty(true) // Atualiza o estado do carrinho vazio
+        setIsLoading(false) // Finaliza o estado de carregamento
       }, 2000)
     }, 2000)
+  }
+
+  const handleRemoveFromCart = (item: ProductModel) => {
+    const itemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id)
+
+    if (itemIndex !== -1) {
+      const updatedCart = cartItems.slice()
+      updatedCart.splice(itemIndex, 1)
+      setCartItems(updatedCart)
+    }
+  }
+
+  const addToCart = (product: ProductModel) => {
+    handleAddFromCart(cartItems, setCartItems, product)
   }
 
   return (
     <S.Container className="checkout-page">
       {!paymentSuccess && (
         <>
-          <Wrapper>
+          <div>
             <div className="title">
               <h1>Carrinho de Compras</h1>
             </div>
-            {cartItems.map((item) => (
-              <BoxItems key={item.id} className="box">
-                <img src={item.foto} alt={item.nome} />
-
-                <div className="container-descriptions">
-                  <div className="name-description">
-                    <p>{item.nome}</p>
-                    <span>{item.descricao}</span>
-                  </div>
-                  <div className="price">{formatPrice(item.preco)}</div>
-                </div>
-              </BoxItems>
-            ))}
-          </Wrapper>
+            {cartItems
+              .reduce(
+                (uniqueItems: ProductModel[], currentItem: ProductModel) => {
+                  const existingItem = uniqueItems.find(
+                    (item) => item.id === currentItem.id
+                  )
+                  if (existingItem) {
+                    existingItem.count = (existingItem.count ?? 0) + 1
+                  } else {
+                    uniqueItems.push({ ...currentItem, count: 1 })
+                  }
+                  return uniqueItems
+                },
+                []
+              )
+              .map((item) => (
+                <CartItem
+                  key={item.id}
+                  item={item}
+                  onRemove={handleRemoveFromCart}
+                  onAdd={() => addToCart(item)}
+                />
+              ))}
+          </div>
           <div className="shop-items">
             <TotalPrice>Total: {formatPrice(totalAmount)}</TotalPrice>
             <ButtonGroup>
-              <button
-                className="finishShop"
-                onClick={handlePayment}
-                disabled={isCartEmpty}>
-                Pagar via Boleto
-              </button>
-
-              <button
-                className="keepShopping"
-                onClick={() => setShowPage(true)}>
+              <Button color="secondary" onClick={() => setShowPage(true)}>
                 Continuar comprando
-              </button>
+              </Button>
+              <Button
+                onClick={handlePayment}
+                disabled={isCartEmpty || isLoading}>
+                {isLoading ? 'Carregando...' : 'Pagar via Boleto'}
+              </Button>
             </ButtonGroup>
           </div>
         </>

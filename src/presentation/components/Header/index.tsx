@@ -1,52 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import cartImage from '/cart.svg'
+import cartImage from '/src/assets/cart.svg'
 import * as S from './styles'
 import { ProductModel } from '../../../domain/models/productsModel'
 import { formatPrice } from '../../utils/formatPrice'
-import { BoxItems } from '../BoxItems'
+import { CartItem } from '../CartItem'
+import { handleAddFromCart } from '../../utils/handleAddFromCart'
+import { Button } from '../Button'
+import { ButtonGroup } from '../ButtonGroup'
 
 interface HeaderProps {
   cartItems: ProductModel[]
   setShowPage: (show: boolean) => void
+  setCartItems: (items: ProductModel[]) => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ cartItems, setShowPage }) => {
+export const Header: React.FC<HeaderProps> = ({
+  cartItems,
+  setShowPage,
+  setCartItems
+}) => {
   const [show, setShow] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
+
   const handleModal = () => {
     setShow(!show)
-  }
-
-  useEffect(() => {
-    const handleDocumentClick = (event: MouseEvent) => {
-      if (
-        event.target instanceof Node &&
-        !isDescendant(event.target, 'dialog') &&
-        !isDescendant(event.target, 'cart-icon')
-      ) {
-        setShow(false)
-      }
-    }
-    if (show) {
-      window.addEventListener('click', handleDocumentClick)
-    }
-    return () => {
-      window.removeEventListener('click', handleDocumentClick)
-    }
-  }, [show])
-
-  const isDescendant = (element: Node, className: string) => {
-    let currentNode: Node | null = element
-    while (currentNode !== null) {
-      if (
-        currentNode instanceof HTMLElement &&
-        currentNode.classList.contains(className)
-      ) {
-        return true
-      }
-      currentNode = currentNode.parentNode
-    }
-    return false
   }
 
   useEffect(() => {
@@ -56,10 +33,30 @@ export const Header: React.FC<HeaderProps> = ({ cartItems, setShowPage }) => {
     )
     setTotalPrice(calculatedTotalPrice)
   }, [cartItems])
+
   const handlePage = () => {
     setShowPage(false)
     setShow(false)
   }
+
+  const handleRemoveFromCart = (item: ProductModel) => {
+    const itemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id)
+
+    if (itemIndex !== -1) {
+      const updatedCart = cartItems.slice()
+      updatedCart.splice(itemIndex, 1)
+      setCartItems(updatedCart)
+
+      if (updatedCart.length === 0) {
+        setShow(false)
+      }
+    }
+  }
+
+  const addToCart = (product: ProductModel) => {
+    handleAddFromCart(cartItems, setCartItems, product)
+  }
+
   return (
     <>
       <S.Container>
@@ -69,26 +66,51 @@ export const Header: React.FC<HeaderProps> = ({ cartItems, setShowPage }) => {
               <span className="item-count">{cartItems.length}</span>
             </div>
           )}
-          <img src={cartImage} className="logo" alt="Vite logo" />
+          <img src={cartImage} alt="cart-image" />
         </div>
       </S.Container>
       {show && (
         <S.Dialog>
-          <S.Wrapper>
-            {cartItems.map((item) => (
-              <BoxItems key={item.id} item={item} />
-            ))}
-          </S.Wrapper>
+          <div onClick={handleModal} className="container-close-button">
+            <span className="close-button">X</span>
+          </div>
+          {cartItems.length > 0 ? (
+            <S.Wrapper>
+              {cartItems
+                .reduce(
+                  (uniqueItems: ProductModel[], currentItem: ProductModel) => {
+                    const existingItem = uniqueItems.find(
+                      (item) => item.id === currentItem.id
+                    )
+                    if (existingItem) {
+                      existingItem.count = (existingItem.count ?? 0) + 1
+                    } else {
+                      uniqueItems.push({ ...currentItem, count: 1 })
+                    }
+                    return uniqueItems
+                  },
+                  []
+                )
+                .map((item) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    onRemove={handleRemoveFromCart}
+                    onAdd={() => addToCart(item)}
+                  />
+                ))}
+            </S.Wrapper>
+          ) : (
+            <div className="empty-text">Carrinho vazio !</div>
+          )}
           <div className="shop-items">
             <S.TotalPrice>Total: {formatPrice(totalPrice)}</S.TotalPrice>
-            <S.ButtonGroup>
-              <button className="keepShopping" onClick={handleModal}>
+            <ButtonGroup>
+              <Button color="secondary" onClick={handleModal}>
                 Continuar comprando
-              </button>
-              <button onClick={handlePage} className="finishShop">
-                Ir para pagamento
-              </button>
-            </S.ButtonGroup>
+              </Button>
+              <Button onClick={handlePage}>Ir para pagamento</Button>
+            </ButtonGroup>
           </div>
         </S.Dialog>
       )}

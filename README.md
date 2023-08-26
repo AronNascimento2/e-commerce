@@ -1,6 +1,15 @@
-![](https://github.com/AronNascimento2/e-commerce/blob/master/src/assets/eccomerce-mobile.png)
-![](https://github.com/AronNascimento2/e-commerce/blob/master/src/assets/ecommerce-mobile1.png)
-![](https://github.com/AronNascimento2/e-commerce/blob/master/src/assets/ecommerce-web.png)
+Siga os seguintes passos:
+
+```bash
+ git clone git@github.com:AronNascimento2/e-commerce.git
+ npm install
+ npm run dev (os scripts "dev:vite" e "dev:json-server" rodarão simultaneamente )
+```
+
+![](https://github.com/AronNascimento2/e-commerce/blob/master/public/ecommerce-mobile1.png)
+![](https://github.com/AronNascimento2/e-commerce/blob/master/public/ecommerce-mobile2.png)
+![](https://github.com/AronNascimento2/e-commerce/blob/master/public/ecommerce-web.png)
+![](https://github.com/AronNascimento2/e-commerce/blob/master/public/ecommerce-web1.png)
 
 🖥️ Tecnologias
 
@@ -9,7 +18,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [React](https://reactjs.org)
 - [Vite](https://vitejs.dev/)
 - [Styled-Components](https://styled-components.com/)
-  
+- [json-server](https://www.fabricadecodigo.com/json-server/)
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

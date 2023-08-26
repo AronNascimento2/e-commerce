@@ -6,7 +6,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-height: 100%;
+
   .title {
     display: flex;
     flex-direction: column;
@@ -30,32 +30,15 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #00a859;
   }
   img {
     width: 50px;
     height: 50px;
   }
-  .keepShopping {
-    border: none;
-    height: 40px;
-    width: 140px;
-    border-radius: 12px;
-    cursor: pointer;
-    background: grey;
-    color: #ffffff;
-    font-weight: bold;
-  }
-  .finishShop {
-    border: none;
-    height: 40px;
-    width: 140px;
-    border-radius: 12px;
-    background-color: #ff9800;
-    color: #ffffff;
-    font-weight: bold;
-    cursor: pointer;
-  }
+
   @media (max-width: 768px) {
+    height: 60%;
     padding: 0;
     .box {
       border: none;
