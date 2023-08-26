@@ -42,7 +42,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
       setTimeout(() => {
         setPaymentSuccess(false)
         setCartItems([]) // Atualiza o carrinho para ficar vazio
-        setShowPage(false)
+        setShowPage(true)
         setIsCartEmpty(true) // Atualiza o estado do carrinho vazio
       }, 2000)
     }, 2000)
