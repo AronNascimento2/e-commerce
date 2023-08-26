@@ -68,7 +68,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               </BoxItems>
             ))}
           </Wrapper>
-          <div>
+          <div className="shop-items">
             <TotalPrice>Total: {formatPrice(totalAmount)}</TotalPrice>
             <ButtonGroup>
               <button

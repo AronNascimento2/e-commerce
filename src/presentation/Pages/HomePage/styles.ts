@@ -18,10 +18,8 @@ export const StyledCard = styled(Card)`
   align-items: center;
   padding: 1rem;
   cursor: pointer;
-  transition: box-shadow 0.3s, transform 0.3s, background-color 0.3s;
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
     background-color: #f5f5f5;
   }
 

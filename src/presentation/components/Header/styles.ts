@@ -62,7 +62,8 @@ export const Dialog = styled.div`
   .shop-items {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    align-items: center;
+    margin: 1rem;
   }
 
   @media (max-width: 768px) {
@@ -79,15 +80,15 @@ export const Dialog = styled.div`
 
 export const ButtonGroup = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  padding: 1rem;
+
   gap: 1rem;
   .keepShopping {
     border: none;
     height: 40px;
     width: 140px;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
     background: grey;
     color: #ffffff;
@@ -97,14 +98,13 @@ export const ButtonGroup = styled.div`
     border: none;
     height: 40px;
     width: 140px;
-    border-radius: 20px;
+    border-radius: 12px;
     background-color: #ff9800;
     color: #ffffff;
     font-weight: bold;
     cursor: pointer;
   }
   @media (max-width: 768px) {
-    padding: 0;
     .keepShopping {
       border: none;
       height: 40px;
