@@ -34,7 +34,7 @@ export const Container = styled.div`
     border: none;
     height: 40px;
     width: 140px;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
     background: grey;
     color: #ffffff;
@@ -44,7 +44,7 @@ export const Container = styled.div`
     border: none;
     height: 40px;
     width: 140px;
-    border-radius: 20px;
+    border-radius: 12px;
     background-color: #ff9800;
     color: #ffffff;
     font-weight: bold;
@@ -59,24 +59,6 @@ export const Container = styled.div`
       padding: 1rem 0.8rem 1rem 2.4rem;
       position: relative;
       border-bottom: 1px solid lightgrey;
-    }
-    .keepShopping {
-      border: none;
-      height: 40px;
-      width: 140px;
-      border-radius: 20px;
-      background: grey;
-      color: #ffffff;
-      font-weight: bold;
-    }
-    .finishShop {
-      border: none;
-      height: 40px;
-      width: 140px;
-      border-radius: 20px;
-      background-color: #ff9800;
-      color: #ffffff;
-      font-weight: bold;
     }
   }
 `
