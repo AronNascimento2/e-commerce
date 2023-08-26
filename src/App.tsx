@@ -1,11 +1,9 @@
-import { HomePage } from './presentation/Pages/HomePage'
-import { Header } from './presentation/components/Header'
 import './app.css'
+import { HomePage } from './presentation/Pages/HomePage'
 
 function App() {
   return (
     <>
-      <Header />
       <HomePage />
     </>
   )
