@@ -7,6 +7,11 @@ export const Container = styled.div`
   justify-content: center;
   width: 100%;
   max-height: 100%;
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .box {
     max-width: 768px;
   }

@@ -53,7 +53,9 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
       {!paymentSuccess && (
         <>
           <Wrapper>
-            <h1>Carrinho de Compras</h1>
+            <div className="title">
+              <h1>Carrinho de Compras</h1>
+            </div>
             {cartItems.map((item) => (
               <BoxItems key={item.id} className="box">
                 <img src={item.foto} alt={item.nome} />
