@@ -1,3 +1,6 @@
+![](https://github.com/AronNascimento2/e-commerce/blob/master/src/assets/eccomerce-mobile.png)
+![](https://github.com/AronNascimento2/e-commerce/blob/master/src/assets/ecommerce-mobile1.png)
+![](https://github.com/AronNascimento2/e-commerce/blob/master/src/assets/ecommerce-web.png)
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
