@@ -80,7 +80,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
               <button
                 className="keepShopping"
-                onClick={() => setShowPage(false)}>
+                onClick={() => setShowPage(true)}>
                 Continuar comprando
               </button>
             </ButtonGroup>

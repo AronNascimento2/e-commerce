@@ -42,7 +42,7 @@ export const HomePage: React.FC = () => {
   return (
     <div>
       <Header setShowPage={setShowPage} cartItems={cartItems} />
-      {!showPage ? (
+      {showPage ? (
         <S.Container>
           {products?.map((product) => (
             <S.StyledCard key={product.id}>

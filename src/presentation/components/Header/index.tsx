@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ cartItems, setShowPage }) => {
     setTotalPrice(calculatedTotalPrice)
   }, [cartItems])
   const handlePage = () => {
-    setShowPage(true)
+    setShowPage(false)
     setShow(false)
   }
   return (
